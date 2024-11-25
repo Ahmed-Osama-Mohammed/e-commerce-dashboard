@@ -1,0 +1,39 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+  
+    mat-card {
+      width: 400px;
+      padding: 20px;
+    }
+    mat-form-field{
+        width: 100%;
+    }
+    .mat-mdc-card-header {
+        display: flex ;
+        padding: 20px 16px;
+        justify-content: center;
+        color: white;
+    }
+    .mdc-card__actions {
+        display: flex ;
+        flex-direction: row;
+        align-items: center;
+        box-sizing: border-box;
+        min-height: 52px;
+        padding: 8px;
+        justify-content: center;
+    }
+    button{
+        width: 150px;
+    }
+    
+    .error-message {
+      color: red;
+      font-size: 0.875rem;
+      margin-top: 10px;
+    }
+  }
+  

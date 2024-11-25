@@ -1,0 +1,334 @@
+{
+  "products": [
+    {
+      "name": "Samsung Galaxy S23",
+      "description": "Flagship phone from Samsung with amazing features",
+      "price": 899.99,
+      "category": "Smartphone",
+      "stock": 120,
+      "image": "https://example.com/images/galaxys23.jpg",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "name": "Sony WH-1000XM5",
+      "category": "Headphones",
+      "price": 349.99,
+      "stock": 80,
+      "image": "https://example.com/images/sony-wh1000xm5.jpg",
+      "description": "Industry-leading noise-canceling headphones"
+    },
+    {
+      "id": "4",
+      "name": "Dell XPS 13",
+      "category": "Laptop",
+      "price": 1299.99,
+      "stock": 50,
+      "image": "https://example.com/images/dell-xps13.jpg",
+      "description": "Premium laptop with a slim design"
+    },
+    {
+      "id": "5",
+      "name": "Apple MacBook Pro 16-inch",
+      "category": "Laptop",
+      "price": 2399.99,
+      "stock": 70,
+      "image": "https://example.com/images/macbookpro16.jpg",
+      "description": "High-performance laptop for professionals"
+    },
+    {
+      "id": "6",
+      "name": "Samsung QLED 4K TV",
+      "category": "TV",
+      "price": 999.99,
+      "stock": 40,
+      "image": "https://example.com/images/samsung-qled4k.jpg",
+      "description": "4K resolution with stunning picture quality"
+    },
+    {
+      "id": "7",
+      "name": "GoPro HERO 10",
+      "category": "Camera",
+      "price": 499.99,
+      "stock": 60,
+      "image": "https://example.com/images/goprohero10.jpg",
+      "description": "Action camera with 5.3K video"
+    },
+    {
+      "id": "8",
+      "name": "Amazon Echo Dot 5th Gen",
+      "category": "Smart Home",
+      "price": 59.99,
+      "stock": 200,
+      "image": "https://example.com/images/echo-dot5.jpg",
+      "description": "Smart speaker with Alexa integration"
+    },
+    {
+      "id": "9",
+      "name": "Fitbit Charge 5",
+      "category": "Wearable",
+      "price": 149.99,
+      "stock": 90,
+      "image": "https://example.com/images/fitbit-charge5.jpg",
+      "description": "Fitness tracker with advanced health metrics"
+    },
+    {
+      "id": "10",
+      "name": "Nintendo Switch OLED",
+      "category": "Gaming",
+      "price": 349.99,
+      "stock": 130,
+      "image": "https://example.com/images/nintendoswitch-oled.jpg",
+      "description": "OLED display for vibrant gaming"
+    },
+    {
+      "id": "11",
+      "name": "Sony PlayStation 5",
+      "category": "Gaming",
+      "price": 499.99,
+      "stock": 100,
+      "image": "https://example.com/images/ps5.jpg",
+      "description": "Next-gen gaming console from Sony"
+    },
+    {
+      "id": "12",
+      "name": "Bose SoundLink Revolve+",
+      "category": "Speakers",
+      "price": 329.99,
+      "stock": 80,
+      "image": "https://example.com/images/bose-soundlink-revolve.jpg",
+      "description": "360-degree Bluetooth speaker with powerful sound"
+    },
+    {
+      "id": "13",
+      "name": "Canon EOS 90D",
+      "category": "Camera",
+      "price": 1299.99,
+      "stock": 40,
+      "image": "https://example.com/images/canon90d.jpg",
+      "description": "DSLR camera with high-speed autofocus"
+    },
+    {
+      "id": "14",
+      "name": "Apple Watch Series 7",
+      "category": "Wearable",
+      "price": 399.99,
+      "stock": 110,
+      "image": "https://example.com/images/apple-watch7.jpg",
+      "description": "Smartwatch with fitness tracking features"
+    },
+    {
+      "id": "15",
+      "name": "Microsoft Surface Pro 8",
+      "category": "Laptop",
+      "price": 1199.99,
+      "stock": 60,
+      "image": "https://example.com/images/surface-pro8.jpg",
+      "description": "2-in-1 laptop with detachable keyboard"
+    },
+    {
+      "id": "16",
+      "name": "Razer Blade 15",
+      "category": "Laptop",
+      "price": 1899.99,
+      "stock": 45,
+      "image": "https://example.com/images/razer-blade15.jpg",
+      "description": "Gaming laptop with high-end specs"
+    },
+    {
+      "id": "17",
+      "name": "LG 27GN950-B",
+      "category": "Monitor",
+      "price": 799.99,
+      "stock": 75,
+      "image": "https://example.com/images/lg27gn950.jpg",
+      "description": "27-inch 4K UHD gaming monitor"
+    },
+    {
+      "id": "18",
+      "name": "Oculus Quest 2",
+      "category": "VR Headset",
+      "price": 299.99,
+      "stock": 110,
+      "image": "https://example.com/images/oculus-quest2.jpg",
+      "description": "Standalone VR headset with immersive experiences"
+    },
+    {
+      "id": "19",
+      "name": "Lenovo ThinkPad X1 Carbon",
+      "category": "Laptop",
+      "price": 1599.99,
+      "stock": 50,
+      "image": "https://example.com/images/thinkpad-x1.jpg",
+      "description": "Business laptop with top-tier performance"
+    },
+    {
+      "id": "20",
+      "name": "JBL Flip 5",
+      "category": "Speakers",
+      "price": 119.99,
+      "stock": 150,
+      "image": "https://example.com/images/jbl-flip5.jpg",
+      "description": "Portable Bluetooth speaker with powerful sound"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "customerName": "John Doe",
+      "items": [
+        "Apple iPhone 14",
+        "Sony WH-1000XM5"
+      ],
+      "totalAmount": 1349.98,
+      "status": "Shipped"
+    },
+    {
+      "id": "2",
+      "customerName": "Jane Smith",
+      "items": [
+        "Samsung Galaxy S23",
+        "Dell XPS 13"
+      ],
+      "totalAmount": 2199.98,
+      "status": "Delivered"
+    },
+    {
+      "id": "3",
+      "customerName": "Alex Brown",
+      "items": [
+        "GoPro HERO 10",
+        "Fitbit Charge 5"
+      ],
+      "totalAmount": 649.98,
+      "status": "Pending"
+    },
+    {
+      "id": "4",
+      "customerName": "Samantha Green",
+      "items": [
+        "Bose SoundLink Revolve+",
+        "Apple Watch Series 7"
+      ],
+      "totalAmount": 729.98,
+      "status": "Delivered"
+    },
+    {
+      "id": "5",
+      "customerName": "Michael White",
+      "items": [
+        "Canon EOS 90D",
+        "Apple MacBook Pro 16-inch"
+      ],
+      "totalAmount": 3699.98,
+      "status": "Shipped"
+    },
+    {
+      "id": "6",
+      "customerName": "Emily Black",
+      "items": [
+        "Apple iPhone 14",
+        "Razer Blade 15"
+      ],
+      "totalAmount": 3299.98,
+      "status": "Delivered"
+    },
+    {
+      "id": "7",
+      "customerName": "David Harris",
+      "items": [
+        "Sony PlayStation 5",
+        "LG 27GN950-B"
+      ],
+      "totalAmount": 1299.98,
+      "status": "Pending"
+    },
+    {
+      "id": "8",
+      "customerName": "Sarah Lee",
+      "items": [
+        "Nintendo Switch OLED",
+        "Samsung QLED 4K TV"
+      ],
+      "totalAmount": 1349.98,
+      "status": "Shipped"
+    },
+    {
+      "id": "9",
+      "customerName": "Brian Lewis",
+      "items": [
+        "Apple Watch Series 7",
+        "Oculus Quest 2"
+      ],
+      "totalAmount": 699.98,
+      "status": "Delivered"
+    },
+    {
+      "id": "10",
+      "customerName": "Sophia Martinez",
+      "items": [
+        "Apple MacBook Pro 16-inch",
+        "Apple Watch Series 7"
+      ],
+      "totalAmount": 2799.98,
+      "status": "Pending"
+    },
+    {
+      "id": "11",
+      "customerName": "Daniel King",
+      "items": [
+        "Sony PlayStation 5",
+        "Bose SoundLink Revolve+"
+      ],
+      "totalAmount": 829.98,
+      "status": "Shipped"
+    },
+    {
+      "id": "12",
+      "customerName": "Rachel Adams",
+      "items": [
+        "Apple iPhone 14",
+        "Fitbit Charge 5"
+      ],
+      "totalAmount": 1149.98,
+      "status": "Delivered"
+    },
+    {
+      "id": "13",
+      "customerName": "Kevin Scott",
+      "items": [
+        "GoPro HERO 10",
+        "Oculus Quest 2"
+      ],
+      "totalAmount": 799.98,
+      "status": "Shipped"
+    },
+    {
+      "id": "14",
+      "customerName": "Nancy Walker",
+      "items": [
+        "Razer Blade 15",
+        "Canon EOS 90D"
+      ],
+      "totalAmount": 2599.98,
+      "status": "Delivered"
+    },
+    {
+      "id": "15",
+      "customerName": "Matthew Carter",
+      "items": [
+        "Samsung Galaxy S23",
+        "Apple iPhone 14"
+      ],
+      "totalAmount": 1899.98,
+      "status": "Shipped"
+    }
+  ],
+  "users": [
+    {
+      "username": "AhmedOsama",
+      "password": "Ahmed@2024",
+      "id": "1"
+    }
+  ]
+}

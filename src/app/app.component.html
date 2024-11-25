@@ -1,0 +1,15 @@
+<!-- Navbar -->
+<nav *ngIf="isLoggedIn">
+    <ul class="navbar">
+      <li><a routerLink="/products" routerLinkActive="active">Products</a></li>
+      <li><a routerLink="/orders" routerLinkActive="active">Orders</a></li>
+      <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    </ul>
+
+
+  </nav>
+  
+  <!-- Router outlet -->
+  <router-outlet></router-outlet>
+  

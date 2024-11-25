@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="button-container">
+    <h2>Orders</h2> 
+    <button mat-raised-button color="primary" [routerLink]="['/orders/create']">Add Order</button>
+</div>
+
+<div class="table-container">
+  <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+    <!-- Customer Name Column -->
+    <ng-container matColumnDef="customerName">
+      <th mat-header-cell *matHeaderCellDef> Customer </th>
+      <td mat-cell *matCellDef="let order" appHighlight> {{ order.customerName }} </td>
+    </ng-container>
+
+    <!-- Items Column -->
+    <ng-container matColumnDef="items">
+      <th mat-header-cell *matHeaderCellDef> Items </th>
+      <td mat-cell *matCellDef="let order" appHighlight> {{ order.items.join(', ') }} </td>
+    </ng-container>
+
+    <!-- Total Amount Column -->
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let order" appHighlight> {{ order.totalAmount | currencyFormatter:'€':2  }} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let order">
+        <mat-select [(value)]="order.status" (selectionChange)="onStatusChange(order, $event.value)" appHighlight>
+          <mat-option value="Pending">Pending</mat-option>
+          <mat-option value="Shipped">Shipped</mat-option>
+          <mat-option value="Delivered">Delivered</mat-option>
+        </mat-select>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let order">
+        <button mat-icon-button color="primary" (click)="onEdit(order)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="openDeleteDialog(order.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+</div>

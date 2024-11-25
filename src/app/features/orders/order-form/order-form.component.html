@@ -1,0 +1,45 @@
+<div class="container">
+<div class="order-form-container">
+  <h2>{{ isEditMode ? 'Edit Order' : 'Create Order' }}</h2>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <!-- Customer Name -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Customer Name</mat-label>
+        <input matInput formControlName="customerName" placeholder="Enter customer name" />
+      </mat-form-field>
+
+      <!-- Items -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Items</mat-label>
+        <textarea
+          matInput
+          formControlName="items"
+          placeholder="Enter items (comma-separated)"
+        ></textarea>
+      </mat-form-field>
+
+      <!-- Total Amount -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Total Amount</mat-label>
+        <input matInput type="number" formControlName="totalAmount" placeholder="Enter total amount" />
+      </mat-form-field>
+
+      <!-- Order Status -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Order Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="Pending">Pending</mat-option>
+          <mat-option value="Shipped">Shipped</mat-option>
+          <mat-option value="Delivered">Delivered</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="orderForm.invalid">
+      {{ isEditMode ? 'Save Changes' : 'Create Order' }}
+    </button>
+  </form>
+</div>
+</div>

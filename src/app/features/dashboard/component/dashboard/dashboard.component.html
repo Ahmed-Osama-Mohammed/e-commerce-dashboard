@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Dashboard</h2>
+
+<div class="dashboard-overview">
+  <!-- Metric Cards in one row -->
+  <div class="metric-cards-row">
+    <mat-card class="metric-card">
+      <mat-card-title class="metric-card-title">Total Sales</mat-card-title>
+      <mat-card-content class="metric-card-content">{{ totalSales | currency }}</mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-title class="metric-card-title">Total Orders</mat-card-title>
+      <mat-card-content class="metric-card-content">{{ totalOrders }}</mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-title class="metric-card-title">Top-Selling Product</mat-card-title>
+      <mat-card-content class="metric-card-content">{{ topSellingProduct }}</mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Sales Trend Card (Centered) -->
+  <mat-card class="sales-trend-card">
+    <mat-card-title class="sales-trend-title">Sales Trend</mat-card-title>
+    <mat-card-content>
+      <app-sales-chart></app-sales-chart>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>
+

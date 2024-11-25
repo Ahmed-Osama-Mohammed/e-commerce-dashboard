@@ -1,0 +1,15 @@
+<div class="chart-container">
+        <mat-card class="chart-card">
+          <mat-card-title class="chart-card-title">Sales Performance</mat-card-title>
+          <mat-card-content>
+            <canvas baseChart
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [legend]="true"
+                    [type]="'line'">
+            </canvas>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
