@@ -29,7 +29,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrls: ['./order-list.component.scss'],
 })
 export class OrderListComponent implements OnInit {
-  // Using DI for services
   private orderService = inject(OrderService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -51,7 +50,7 @@ export class OrderListComponent implements OnInit {
       (data) => {
         this.orders = data.map(order => ({
           ...order,
-          items: order.items || []  // Ensure items is always an array
+          items: order.items || [] 
         }));
       },
       (error) => {
@@ -65,7 +64,6 @@ export class OrderListComponent implements OnInit {
     this.orderService.updateOrder(this.orderId, order).subscribe();
   }
 
-  // onEdit method with navigation logic
   onEdit(order: Order): void {
     this.router.navigate(['/orders/edit', order.id]);
   }
@@ -83,14 +81,11 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  // onDelete method with API call and reloading orders
   deleteOrder(orderId: number): void {
     console.log('Delete order with ID:', orderId);
-    // Call the delete method from OrderService
     this.orderService.deleteOrder(orderId).subscribe(
       () => {
         console.log('Order deleted successfully');
-        // Reload orders after deletion
         this.loadOrders();
       },
       (error: any) => {

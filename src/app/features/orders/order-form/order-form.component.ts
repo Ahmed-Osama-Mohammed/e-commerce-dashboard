@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../services/order.service';
 import { Order } from 'src/app/models/order.model';
 
+
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',
@@ -11,7 +12,7 @@ import { Order } from 'src/app/models/order.model';
 })
 export class OrderFormComponent implements OnInit {
   orderForm!: FormGroup;
-  isEditMode: boolean = false; // Flag to check if we are in edit mode
+  isEditMode: boolean = false;
   orderId!: number;
 
   constructor(
@@ -22,12 +23,10 @@ export class OrderFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get the orderId from the route params, if available
     this.orderId = +this.route.snapshot.paramMap.get('id')!;
-    this.isEditMode = !!this.orderId; // Set isEditMode to true if orderId exists
+    this.isEditMode = !!this.orderId; 
     this.initializeForm();
 
-    // If in edit mode, fetch the order data
     if (this.isEditMode) {
       this.orderService.getOrderById(this.orderId).subscribe({
         next: (order) => this.populateForm(order),
@@ -36,7 +35,6 @@ export class OrderFormComponent implements OnInit {
     }
   }
 
-  // Initialize the form with default values
   initializeForm(): void {
     this.orderForm = this.fb.group({
       customerName: ['', [Validators.required]],
@@ -46,7 +44,6 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
-  // Populate the form with existing order data (for edit mode)
   populateForm(order: Order): void {
     this.orderForm.patchValue({
       customerName: order.customerName,
@@ -56,21 +53,16 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
-  // Handle form submission (add or update order)
   onSubmit(): void {
     if (this.orderForm.invalid) return;
-
     const orderData = this.orderForm.value;
-
-    // Create or update the order
     const order: Order = {
       ...orderData,
-      items: orderData.items.split(',').map((item: string) => item.trim()), // Convert items back to array
-      id: this.isEditMode ? this.orderId : undefined, // Only add id for update
+      items: orderData.items.split(',').map((item: string) => item.trim()),
+      id: this.isEditMode ? this.orderId : undefined, 
     };
 
     if (this.isEditMode) {
-      // Update the existing order
       this.orderService.updateOrder(this.orderId, order).subscribe({
         next: () => {
           console.log('Order updated successfully');
@@ -79,7 +71,6 @@ export class OrderFormComponent implements OnInit {
         error: (err) => console.error('Error updating order:', err),
       });
     } else {
-      // Add a new order
       this.orderService.createOrder(order).subscribe({
         next: () => {
           console.log('Order created successfully');

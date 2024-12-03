@@ -29,7 +29,6 @@ export class LoginComponent {
         );
 
         if (user) {
-          // Store session token (for simplicity, username is stored as token)
           localStorage.setItem('authToken', this.username);
           localStorage.setItem('logged', JSON.stringify(true))
           this.router.navigate(['/products']);

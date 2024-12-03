@@ -25,18 +25,18 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({ declarations: [AppComponent, LoginComponent],
     bootstrap: [AppComponent], imports: [BrowserModule,
-        NoopAnimationsModule, // Required for Angular Material
+        NoopAnimationsModule, 
         AppRoutingModule,
         BaseChartDirective ,
         StoreModule.forRoot({
-            router: routerReducer, // Include router state
+            router: routerReducer, 
             products: productReducer
         }),
         EffectsModule.forRoot([ProductEffects]),
         StoreRouterConnectingModule.forRoot(),
         StoreDevtoolsModule.instrument({
-          maxAge: 25, // Retain last 25 states
-          connectInZone: true, // Ensure this matches your NgRx version
+          maxAge: 25, 
+          connectInZone: true,
         }),
         FormsModule,
         RouterModule.forChild([{ path: '', component: LoginComponent }]),

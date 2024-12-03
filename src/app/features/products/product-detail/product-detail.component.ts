@@ -4,14 +4,14 @@ import { ProductService } from '../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialoge-component/confirm-dialog.component';
-  
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
-  product: any; // Your product type here
+  product: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,12 +48,12 @@ export class ProductDetailComponent implements OnInit {
   deleteProduct(productId: number): void {
     this.productService.deleteProduct(productId).subscribe({
       next: () => {
-        this.snackBar.open('Product deleted successfully!', 'Close', { duration: 3000 });
+        this.snackBar.open('Product deleted successfully!', 'Close', { duration: 3000, verticalPosition: 'top' });
         this.router.navigate(['/products']);
       },
       error: (err) => {
         console.error('Error deleting product:', err);
-        this.snackBar.open('Failed to delete product. Please try again.', 'Close', { duration: 3000 });
+        this.snackBar.open('Failed to delete product. Please try again.', 'Close', { duration: 3000, verticalPosition: 'top' });
       },
     });
   }

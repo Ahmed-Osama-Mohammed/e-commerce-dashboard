@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  dataSource = new MatTableDataSource<Product>([]); // Initialize MatTableDataSource
+  dataSource = new MatTableDataSource<Product>([]); 
   displayedColumns: string[] = ['id', 'name', 'category', 'price', 'stock', 'actions'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
@@ -34,7 +34,6 @@ export class ProductListComponent implements OnInit {
     const sortColumn = this.sort ? this.sort.active : '';
     const sortDirection = this.sort ? this.sort.direction : 'asc';
 
-    // Dispatch action to load products with pagination and sorting parameters
     this.store.dispatch(fromProductActions.loadProducts({
       pageIndex,
       pageSize,
@@ -42,22 +41,20 @@ export class ProductListComponent implements OnInit {
       sortDirection
     }));
 
-    // Subscribe to the products observable and update dataSource
     this.store
       .select(fromProductSelectors.selectAllProducts)
       .subscribe((products) => {
-        this.dataSource.data = products ?? []; // Update dataSource
+        this.dataSource.data = products ?? []; 
         if (this.paginator) {
-          this.dataSource.paginator = this.paginator; // Set paginator
+          this.dataSource.paginator = this.paginator; 
         }
         if (this.sort) {
-          this.dataSource.sort = this.sort; // Set sorting
+          this.dataSource.sort = this.sort; 
         }
       });
   }
 
   openDeleteDialog(productId: number): void {
-    // Open confirmation dialog for delete
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: { message: 'Are you sure you want to delete this product?' },

@@ -9,17 +9,13 @@ import { Product } from 'src/app/models/product.model';
   providedIn: 'root'
 })
 export class DashboardService {
-  apiUrl="/.netlify/functions/json-server"
+  apiUrl='http://localhost:3000'
   constructor(private http: HttpClient) {}
 
-  // Assuming there is an endpoint for orders and products
-  getOrders(): Observable<any[]> {
+  getOrders(): Observable<Order[]> {
     return this.http.get<[]>(`${this.apiUrl}/orders`);
   }
 
-  getProducts(): Observable<any[]> {
-    return this.http.get<Product[]>(this.apiUrl);
-  }
 
   getDashboardMetrics(): Observable<any> {
     return this.getOrders().pipe(
@@ -37,11 +33,11 @@ export class DashboardService {
     );
   }
 
-  private calculateTotalSales(orders: any[]): number {
+   calculateTotalSales(orders: any[]): number {
     return orders.reduce((sum, order) => sum + order.totalAmount, 0);
   }
 
-  private calculateTopSellingProduct(orders: any[]): string {
+   calculateTopSellingProduct(orders: any[]): string {
     const productsSold:any = {};
 
     orders.forEach((order:Order) => {

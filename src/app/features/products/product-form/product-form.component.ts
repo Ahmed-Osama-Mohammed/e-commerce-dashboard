@@ -15,9 +15,9 @@ import { Product } from 'src/app/models/product.model';
   styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit {
-  productForm: UntypedFormGroup; // Using UntypedFormGroup for flexibility
-  productId: number | null = null; // To track if editing an existing product
-  isEditMode: boolean = false; // Flag to distinguish between add/edit modes
+  productForm: UntypedFormGroup; 
+  productId: number | null = null; 
+  isEditMode: boolean = false; 
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +26,6 @@ export class ProductFormComponent implements OnInit {
     private router: Router,
     private store: Store
   ) {
-    // Using UntypedFormGroup for better flexibility
     this.productForm = this.fb.group({
       name: new UntypedFormControl('', [Validators.required]),
       description: new UntypedFormControl('', [Validators.required]),
@@ -38,11 +37,11 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productId = Number(this.route.snapshot.paramMap.get('id')); // Get product ID from URL
+    this.productId = Number(this.route.snapshot.paramMap.get('id')); 
     if (this.productId) {
       this.isEditMode = true;
       this.productService.getProductById(this.productId).subscribe((product) => {
-        this.productForm.patchValue(product); // Populate the form with existing product data
+        this.productForm.patchValue(product); 
       });
     }
   }
@@ -50,19 +49,21 @@ export class ProductFormComponent implements OnInit {
   onSubmit(): void {
     if (this.productForm.valid) {
       if (this.isEditMode) {
-        // Update existing product
-        this.productService
-          .updateProduct(this.productId!, this.productForm.value)
-          .subscribe(() => {
-            this.router.navigate(['/products']);
-          });
+        const updatedProduct = {
+          ...this.productForm.value,
+          id: this.productId!,
+        };
+  
+        this.productService.updateProduct(this.productId!, updatedProduct).subscribe(() => {
+          this.router.navigate(['/products']);
+        });
       } else {
-        // Add new product
         const createdProduct: Product = this.productForm.value;
         let products: Observable<Product[]> = this.store.select(fromProductSelectors.selectAllProducts);
+  
         products.subscribe((products) => {
           const length = products.length;
-          createdProduct.id = length + 1;
+          createdProduct.id = length + 1; 
           this.productService.createProduct(createdProduct).subscribe(() => {
             this.router.navigate(['/products']);
           });
@@ -70,4 +71,6 @@ export class ProductFormComponent implements OnInit {
       }
     }
   }
+  
+  
 }

@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: '', component: OrderListComponent },
   { path: 'create', component: OrderFormComponent },
   { path: 'edit/:id', component: OrderFormComponent },
-  { path: '', redirectTo: '', pathMatch: 'full' } // Redirect without a component
+  { path: '', redirectTo: '', pathMatch: 'full' } 
 ];
 
 

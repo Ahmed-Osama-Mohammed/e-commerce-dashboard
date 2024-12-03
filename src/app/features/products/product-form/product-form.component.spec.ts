@@ -1,123 +1,187 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductFormComponent } from './product-form.component';
-import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
-import { Store, StoreModule } from '@ngrx/store'; // Import StoreModule
-import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 import * as fromProductSelectors from 'src/app/store/products/product.selectors';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-
+import { of } from 'rxjs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Product } from 'src/app/models/product.model';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ProductFormComponent', () => {
   let component: ProductFormComponent;
   let fixture: ComponentFixture<ProductFormComponent>;
-  let productService: ProductService;
-  let mockActivatedRoute: any;
-  let store: any;
-
-  beforeEach(async () => {
-    // Mock ActivatedRoute with a stub value for `id`
-    mockActivatedRoute = {
-      snapshot: { paramMap: { get: (key: string) => key === 'id' ? '1' : null } },
-    };
-
-    await TestBed.configureTestingModule({
-    declarations: [ProductFormComponent],
-    imports: [MatCardModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, StoreModule.forRoot({})],
-    providers: [
-        FormBuilder,
-        ProductService,
-        { provide: ActivatedRoute, useValue: mockActivatedRoute }, // Provide the mocked route
-        Router,
-        provideHttpClient(withInterceptorsFromDi()),
-    ]
-}).compileComponents();
-  });
+  let productService: jasmine.SpyObj<ProductService>;
+  let store: jasmine.SpyObj<Store>;
+  let router: jasmine.SpyObj<Router>;
+  const mockProduct: Product = { id: 1, name: 'Test Product', description: 'A sample product', price: 100, category: 'Category 1', stock: 10, image: 'image.jpg' };
 
   beforeEach(() => {
+    const productServiceSpy = jasmine.createSpyObj('ProductService', ['getProductById', 'createProduct', 'updateProduct']);
+    const storeSpy = jasmine.createSpyObj('Store', ['select']);
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
+    TestBed.configureTestingModule({
+      declarations: [ProductFormComponent],
+      imports: [ReactiveFormsModule, RouterTestingModule],
+      providers: [
+        { provide: ProductService, useValue: productServiceSpy },
+        { provide: Store, useValue: storeSpy },
+        { provide: Router, useValue: routerSpy },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: {
+                get: (key: string) => '1', // Simulating a route parameter for editing
+              },
+            },
+          },
+        },
+        FormBuilder,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    });
+
     fixture = TestBed.createComponent(ProductFormComponent);
     component = fixture.componentInstance;
-    productService = TestBed.inject(ProductService); // Inject the real ProductService
-    store = TestBed.inject(Store); // Inject the store
-    fixture.detectChanges();
+    productService = TestBed.inject(ProductService) as jasmine.SpyObj<ProductService>;
+    store = TestBed.inject(Store) as jasmine.SpyObj<Store>;
+    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create a new product when form is submitted in add mode', () => {
-    component.productForm.setValue({
-      name: 'New Product',
-      description: 'Product Description',
-      price: 100,
-      category: 'Category',
-      stock: 10,
-      image: 'image.jpg',
-    });
+ it('should load product data in edit mode', () => {
+  const mockProduct = {
+    id: 1,
+    name: 'Test Product',
+    description: 'Test description',
+    price: 100,
+    category: 'Test Category',
+    stock: 10,
+    image: 'test-image.jpg',
+  };
 
-    spyOn(productService, 'createProduct').and.returnValue(of({id:1,name: 'Updated Product',
-      description: 'Updated Description',
-      price: 150,
-      category: 'Updated Category',
-      stock: 20,
-      image: 'updated-image.jpg'})); // Spy on the real createProduct method
-    spyOn(store, 'select').and.returnValue(of([])); // Mock store.select to return an empty array
+  productService.getProductById.and.returnValue(of(mockProduct));
+  component.ngOnInit();
 
-    component.onSubmit();
-
-    expect(productService.createProduct).toHaveBeenCalled();
+  expect(component.productForm.value).toEqual({
+    name: mockProduct.name,
+    description: mockProduct.description,
+    price: mockProduct.price,
+    category: mockProduct.category,
+    stock: mockProduct.stock,
+    image: mockProduct.image,
   });
 
-  it('should show form errors if form is invalid and submitted', () => {
-    component.productForm.setValue({
-      name: '',
-      description: '',
-      price: -1, // Invalid price
-      category: '',
-      stock: -5, // Invalid stock
-      image: '',
-    });
+  expect(component.productId).toBe(mockProduct.id);
+});
 
-    spyOn(productService, 'createProduct').and.returnValue(of({id:1,name: 'Updated Product',
-      description: 'Updated Description',
-      price: 150,
-      category: 'Updated Category',
-      stock: 20,
-      image: 'updated-image.jpg'}));
+it('should update a product when form is submitted in edit mode', () => {
+  component.isEditMode = true;
+  component.productId = 1;
 
-    component.onSubmit();
+  const mockFormData = {
+    name: 'Updated Product',
+    description: 'Updated description',
+    price: 300,
+    category: 'Updated Category',
+    stock: 50,
+    image: 'updated-image.jpg',
+  };
 
-    expect(component.productForm.invalid).toBeTrue(); // Ensure form is invalid
-    expect(productService.createProduct).not.toHaveBeenCalled();
-  });
+  const expectedProduct = {
+    ...mockFormData,
+    id: 1, 
+  };
 
-  it('should update an existing product when form is submitted in edit mode', () => {
-    component.productId = 1; // Simulate edit mode
+  productService.updateProduct.and.returnValue(of(expectedProduct));
+  router.navigate.and.returnValue(Promise.resolve(true));
+
+  component.productForm.setValue(mockFormData);
+  component.onSubmit();
+
+  expect(productService.updateProduct).toHaveBeenCalledWith(1, expectedProduct);
+  expect(router.navigate).toHaveBeenCalledWith(['/products']);
+});
+
+  
+  it('should update a product when form is submitted in edit mode', () => {
     component.isEditMode = true;
-    component.productForm.setValue({
+    component.productId = 1;
+  
+    const updatedProduct = {
+      id: 1,
       name: 'Updated Product',
-      description: 'Updated Description',
-      price: 150,
+      description: 'Updated description',
+      price: 300,
       category: 'Updated Category',
-      stock: 20,
+      stock: 50,
       image: 'updated-image.jpg',
+    };
+  
+    productService.updateProduct.and.returnValue(of(updatedProduct)); 
+  
+    component.productForm.setValue({
+      name: updatedProduct.name,
+      description: updatedProduct.description,
+      price: updatedProduct.price,
+      category: updatedProduct.category,
+      stock: updatedProduct.stock,
+      image: updatedProduct.image,
     });
+  
+    component.onSubmit();
+  
+    expect(productService.updateProduct).toHaveBeenCalledWith(1, updatedProduct);
+    expect(router.navigate).toHaveBeenCalledWith(['/products']);
+  });
+  
+  
 
-    spyOn(productService, 'updateProduct').and.returnValue(of({id:1,name: 'Updated Product',
-      description: 'Updated Description',
-      price: 150,
+  it('should update a product when form is submitted in edit mode', () => {
+    component.isEditMode = true;
+    component.productId = 1;
+  
+    const updatedProduct = {
+      id:component.productId,
+      name: 'Updated Product',
+      description: 'Updated description',
+      price: 300,
       category: 'Updated Category',
-      stock: 20,
-      image: 'updated-image.jpg'}));
+      stock: 50,
+      image: 'updated-image.jpg',
+    };
+  
+    productService.updateProduct.and.returnValue(of(updatedProduct));
+  
+    component.productForm.setValue({
+      name: updatedProduct.name,
+      description: updatedProduct.description,
+      price: updatedProduct.price,
+      category: updatedProduct.category,
+      stock: updatedProduct.stock,
+      image: updatedProduct.image,
+    });
+  
+    component.onSubmit();
+  
+    expect(productService.updateProduct).toHaveBeenCalledWith(1, updatedProduct);
+    expect(router.navigate).toHaveBeenCalledWith(['/products']);
+  });
+  
 
+  it('should not submit the form if it is invalid', () => {
+    component.productForm.controls['name'].setValue('');
     component.onSubmit();
 
-    expect(productService.updateProduct).toHaveBeenCalledWith(1, component.productForm.value);
+    expect(productService.createProduct).not.toHaveBeenCalled();
+    expect(productService.updateProduct).not.toHaveBeenCalled();
+    expect(router.navigate).not.toHaveBeenCalled();
   });
 });

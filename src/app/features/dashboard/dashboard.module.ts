@@ -7,7 +7,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardService } from './services/dashboard.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SalesChartComponent } from './component/sales-chart/sales-chart.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // For loading indicators
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 
